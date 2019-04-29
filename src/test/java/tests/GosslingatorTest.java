@@ -4,9 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class GosslingatorTest {
+
+    String actualNumberOfRyans;
 
     @Test
     public void itShouldAddOneRyan() {
@@ -61,12 +64,21 @@ public class GosslingatorTest {
         //1.otvorit stranku
         driver.get("http://localhost/gosslingator.php");
         //2. kliknut na tlacidlo pridat
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
+
+        WebElement addRyanButton = driver.findElement(By.id("addRyan"));
+
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+
         driver.findElement(By.id("removeRyan")).click();
         //3.overit pocitanie Ryanov
-        Assert.assertEquals("2", driver.findElement(By.id("ryanCounter")).getText());
+
+        actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
+        String actualRyanDescription = driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
+
+        Assert.assertEquals("2", actualNumberOfRyans);
+        Assert.assertEquals("ryans", actualRyanDescription);
         //4. zatvorit prehliadac
         driver.close();
         //5. ukoncit session
@@ -81,56 +93,58 @@ public class GosslingatorTest {
         driver.get("http://localhost/gosslingator.php");
         //toto raz bude cyklus
 
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
-        driver.findElement(By.id("addRyan")).click();
+        WebElement addRyanButton = driver.findElement(By.id("addRyan"));
+        //alt + J oznacenie kazdeho dalsieho vyskytu
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
+        addRyanButton.click();
 
         Assert.assertEquals("NUMBER OF\n" +
                 "RYANS\n" +
