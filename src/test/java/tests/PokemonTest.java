@@ -1,5 +1,6 @@
 package tests;
 
+import Base.TestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,46 +11,42 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class PokemonTest {
-
-        WebDriver driver;
+public class PokemonTest extends TestBase {
 
         @Before
-        public void setUp() {
-            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-            //0.spustit prehliadac
-            driver = new ChromeDriver();
-            //vyssie sme si vytvorili novu instanciu z triedy webdriver chcem novy onjekt vytvorit - nova instancia google chrome to bude
-            //objekt sa bude volat driver
+        public void openPage() {
             //1.otvorit stranku
-            driver.get("http://localhost/vybersi.php");
-        }
-
-        @After
-        public void tearDown() {
-            driver.close();
-            driver.quit();
-
+            driver.get(BASE_URL + "/vybersi.php");
         }
 
     @Test
     public void itShouldSelectPokemons(){
-
             String[] selectedPokemons = {"Pikachu", "Bulbasaur" , "Charmander", "Diglett", "Geodude"};
 
-            WebElement pokemonSelect = driver.findElement(By.cssSelector("select"));
-
             for (String pokemon: selectedPokemons) {
-
-
                 //vyberiem pokemona
-                new Select(pokemonSelect).selectByVisibleText(pokemon);
+                selectPokemon(pokemon);
                 //overim hlasku
-                String actualMessage = driver.findElement(By.cssSelector("div.pokemon h3")).getText();
-                String expectedMessage = "I choose you " + pokemon + " !";
+                //String actualMessage = driver.findElement(By.cssSelector("div.pokemon h3")).getText();
+                //String expectedMessage = "I choose you " + pokemon + " !";
+
                 //String expectedMessageByFormmat = String.format("I choose you %s !", pokemon);
                 //bud pouzit zakomentovane (krajsi zapis toho vyssie) alebo to povodne
-                Assert.assertEquals(expectedMessage, actualMessage);
+                Assert.assertEquals(getExpectedMessage (pokemon), getActualMessage ());
             }
+    }
+    //zmenili sme signaturu metody
+    private void selectPokemon (String pokemonToSelect){
+        WebElement pokemonSelect = driver.findElement(By.cssSelector("select"));
+        new Select(pokemonSelect).selectByVisibleText(pokemonToSelect);
+    }
+
+    private String getActualMessage (){
+            return driver.findElement(By.cssSelector("div.pokemon h3")).getText();
+    }
+
+    private String getExpectedMessage (String pokemonName){
+            //metoda mi vrati ocakavanu hlasku I choose you {pokemon}} !
+       return String.format("I choose you %s !", pokemonName);
     }
 }
