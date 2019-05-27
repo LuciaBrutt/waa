@@ -1,33 +1,18 @@
 package tests;
 
-import org.junit.After;
+import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class XpathTrainingTest {
-    WebDriver driver;
+public class XpathTrainingTest extends TestBase {
 
     @Before
-    public void setUp (){
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //vyssie sme si vytvorili novu instanciu z triedy webdriver chcem novy onjekt vytvorit - nova instancia google chrome to bude
-        //objekt sa bude volat driver
+    public void openPage (){
+
         //1.otvorit stranku
-        driver.get("http://localhost/xpathtrainingcenter.php");
-    }
-
-    @After
-    public void tearDown () {
-        driver.close();
-        driver.quit();
-
-        System.out.println("s panom bohom idem od vas");
+        driver.get(BASE_URL + "/xpathtrainingcenter.php");
     }
 
     @Test
@@ -35,15 +20,21 @@ public class XpathTrainingTest {
 
         //2. kliknut na tlacidlo pridat
         String buttonText = "One more button";
-        driver.findElement(By.xpath("//button[contains(text(),'" + buttonText + "')]")).click();
-
-        String actualMessage = driver.findElement(By.cssSelector("div.output h2 span")).getText();
+        clickOnButton(buttonText);
 
         Assert.assertEquals(
                 "you clicked " + buttonText.toLowerCase(),
-        actualMessage
+        getActualMessage()
         );
 }
+
+    private String getActualMessage() {
+        return driver.findElement(By.cssSelector("div.output h2 span")).getText();
+    }
+
+    private void clickOnButton(String buttonText) {
+        driver.findElement(By.xpath("//button[contains(text(),'" + buttonText + "')]")).click();
+    }
 
     @Test
     public void itShouldDisplayEnteredMessage() {
@@ -54,9 +45,8 @@ public class XpathTrainingTest {
         driver.findElement(By.id("hitme")).click();
 
         //vytiahnem /precitam hodnotu zo stranky a ulozim ju do premennej
-        String actualMessage = driver.findElement(By.cssSelector("div.output h2 span")).getText();
         Assert.assertEquals(
-                "you entered " + message, actualMessage);
+                "you entered " + message, getActualMessage());
 
     }
 

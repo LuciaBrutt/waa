@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import pages.ConchitaPage;
 
 public class ConchitaTest extends TestBase {
 
@@ -13,6 +14,7 @@ public class ConchitaTest extends TestBase {
 
         //1.otvorit stranku
         driver.get(BASE_URL + "/zenaalebomuz.php");
+        conchitaPage = new ConchitaPage(driver);
     }
 
     @Test

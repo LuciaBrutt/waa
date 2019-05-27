@@ -1,17 +1,16 @@
 package tests;
 
-import Base.TestBase;
-import org.junit.After;
+import base.TestBase;
+import pages.GosslingatorPage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class GosslingatorTest extends TestBase {
+    private GosslingatorPage gossPage;
 
 
 
@@ -23,6 +22,7 @@ public class GosslingatorTest extends TestBase {
 
         //1.otvorit stranku
         driver.get(BASE_URL + "/gosslingator.php");
+        gossPage = new GosslingatorPage(driver);
     }
 
 
@@ -31,15 +31,16 @@ public class GosslingatorTest extends TestBase {
     @Test
     public void itShouldAddOneRyan() {
 
+        gossPage.addRyan();
+
         //2. kliknut na tlacidlo pridat
-        addRyan();
         //driver.findElement(By.id("addRyan")).click();
         //driver.findElement(By.id("removeRyan")).click();
         //3.overit pocitanie Ryanov
-        Assert.assertEquals("1", getRyanCounterNumber());
+        Assert.assertEquals("1", gossPage.getRyanCounterNumber());
 
         // vypisem si do logu aktualny pocet z pocitadla ryanov
-        Assert.assertEquals("ryan", getCounterDescription ());
+        Assert.assertEquals("ryan", gossPage.getCounterDescription ());
 
     }
 
@@ -56,10 +57,10 @@ public class GosslingatorTest extends TestBase {
     public void itShouldAddTwoRyans() {
 
         //2. kliknut na tlacidlo pridat
+        gossPage.addRyan();
+        gossPage.addRyan();
+        gossPage.addRyan();
 
-        addRyan();
-        addRyan();
-        addRyan();
         //addRyanButton.click();
         //addRyanButton.click();
         //addRyanButton.click();
@@ -67,38 +68,37 @@ public class GosslingatorTest extends TestBase {
         driver.findElement(By.id("removeRyan")).click();
         //3.overit pocitanie Ryanov
 
-        Assert.assertEquals("2", getRyanCounterNumber());
-        Assert.assertEquals("ryans", getCounterDescription());
+        Assert.assertEquals("2", gossPage.getRyanCounterNumber());
+        Assert.assertEquals("ryans", gossPage.getCounterDescription());
 
     }
 
     @Test
 
     public void itShouldDisplayWarningMessage() {
-
         //toto raz bude cyklus
 
         for (int i = 0; i < 50; i++) {
-            addRyan();
+            gossPage.addRyan();
             //porovnam skutocnu hodnotu zo stranky s hodnotou indexu +1
             //index si musim premenit na String aby som ich mohla porovnat
-            Assert.assertEquals(String.valueOf(i + 1), getRyanCounterNumber());
+            Assert.assertEquals(String.valueOf(i + 1), gossPage.getRyanCounterNumber());
 
             //overit sklonovanie pomocou podmienky
             if (i + 1 == 1) {
-                Assert.assertEquals("ryan", getCounterDescription());
+                Assert.assertEquals("ryan", gossPage.getCounterDescription());
             }
 
             if (i + 1 >= 2) {
-                Assert.assertEquals("ryans", getCounterDescription());
+                Assert.assertEquals("ryans", gossPage.getCounterDescription());
             }
 
             // overim pocet obrazkov ryana
 
-            Assert.assertEquals(i+1, getNumberOfRyanImages());
+            Assert.assertEquals(i+1, gossPage.getNumberOfRyanImages());
 
             System.out.println("index i = " + i);
-            System.out.println("pocet ryanov = " + getRyanCounterNumber());
+            System.out.println("pocet ryanov = " + gossPage.getRyanCounterNumber());
         }
         //alt + J oznacenie kazdeho dalsieho vyskytu
 
@@ -113,15 +113,15 @@ public class GosslingatorTest extends TestBase {
 
     public void itShouldDisplayWarningMessageUsingWhileCycle() {
         WebElement addRyanButton = driver.findElement(By.id("addRyan"));
-        String actualNumberOfRyans = getRyanCounterNumber();
+        String actualNumberOfRyans = gossPage.getRyanCounterNumber();
         //while cyklus sa vykona vzdy ak je podmienka true
 
         int clicksLimit = 30;
         int clicks = 0;
 
-        while (!getRyanCounterNumber().equals("50") || clicks < clicksLimit) {
+        while (!gossPage.getRyanCounterNumber().equals("50") || clicks < clicksLimit) {
             //addRyanButton.click();
-            addRyan();
+            gossPage.addRyan();
             clicks++;
             //System.out.println("ahoj");
         }
@@ -130,25 +130,8 @@ public class GosslingatorTest extends TestBase {
     @Test
         public void itShouldDisplayNoRyanOnPageOpen(){
         Assert.assertEquals( 0,
-                getNumberOfRyanImages ()
+                gossPage.getNumberOfRyanImages ()
         );
 }
 
-    private void addRyan (){
-        driver.findElement(By.id("addRyan")).click();
-    }
-
-    private String getRyanCounterNumber(){
-        return driver.findElement(By.id("ryanCounter")).getText();
-    }
-
-    private String getCounterDescription () {
-        //vrati napis ryan alebo ryans
-        return driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
-    }
-
-    private int getNumberOfRyanImages () {
-        //vrati pocet obrazkov ryana
-        return driver.findElements(By.cssSelector("img")).size();
-    }
 }
