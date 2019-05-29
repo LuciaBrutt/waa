@@ -11,22 +11,21 @@ public class ConchitaTest extends TestBase {
 
     @Before
     public void openPage() {
-
         //1.otvorit stranku
         driver.get(BASE_URL + "/zenaalebomuz.php");
-        conchitaPage = new ConchitaPage(driver);
+        //conchitaPage = new ConchitaPage(driver);
     }
 
     @Test
     public void noOptionShouldBeSelected() {
         Assert.assertFalse(driver.findElement(By.xpath("//input[@value='wurst']")).isSelected());
         Assert.assertFalse(driver.findElement(By.xpath("//label[text()='Zena']/input")).isSelected());
-
     }
 
     @Test
     public void itShouldSelectMale() {
-        driver.findElement(By.xpath("//input[@value='wurst']")).click();
+        ConchitaPage conPage = new ConchitaPage(driver);
+        conPage.selectWurst();
         //overit hlasku
         String expectedMessage = "It's wurst";
         String actualMessage = driver.findElement(By.cssSelector("h1.description")).getText();
@@ -38,10 +37,8 @@ public class ConchitaTest extends TestBase {
     @Test
     public void imageShouldBeDisplayed() {
         Assert.assertTrue(driver.findElement(By.cssSelector("img")).isDisplayed());
-
     }
 
-
-    }
+}
 
 
