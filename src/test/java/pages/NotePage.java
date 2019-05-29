@@ -1,38 +1,54 @@
 package pages;
 
+import models.Note;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class NotePage {
 
-   private WebDriver pageDriver;
+    @FindBy(name = "title")
+    private WebElement titleInput;
+
+    @FindBy(name = "author")
+    private WebElement authorInput;
+
+    @FindBy(name = "message")
+    private WebElement messageInput;
+
+    @FindBy(css = "button.btn-block")
+    private WebElement submitButton;
+
+    private WebDriver pageDriver;
 
     public NotePage(WebDriver driver) {
         this.pageDriver = driver;
+        PageFactory.initElements(pageDriver, this);
     }
 
-
-    public void enterNoteData (String title, String person, String message){
-        pageDriver.findElement(By.name("title")).sendKeys(title);
-        pageDriver.findElement(By.name("author")).sendKeys(person);
-        pageDriver.findElement(By.name("message")).sendKeys(message);
+    public void enterNoteData(Note note) {
+        titleInput.sendKeys(note.getTitle());
+        authorInput.sendKeys(note.getPerson());
+        messageInput.sendKeys(note.getMessage());
     }
 
-    public void submitNewNote () {
-        pageDriver.findElement(By.cssSelector("button.btn-block")).click();
+    public void submitNewNote() {
+        submitButton.click();
     }
 
-    public WebElement getLastNoteFromList () {
+    public WebElement getLastNoteFromList() {
         return pageDriver.findElement(By.cssSelector("ul.list-of-sins > li:last-child"));
     }
 
-    public void checkNoteDetail (String title, String author, String message){
+    public void checkNoteDetail(Note noteToCheck) {
         WebElement detail = pageDriver.findElement(By.cssSelector("div.content"));
-        Assert.assertEquals(title, detail.findElement(By.cssSelector("h4.title")).getText());
-        Assert.assertEquals(author, detail.findElement(By.cssSelector("h4.recipent")).getText());
-        Assert.assertEquals(message, detail.findElement(By.cssSelector("p")).getText());
+        Assert.assertEquals(noteToCheck.getTitle(), detail.findElement(By.cssSelector("h4.title")).getText());
+        //Assert.assertEquals(title, detail.findElement(By.cssSelector("h4.title")).getText());
+        Assert.assertEquals(noteToCheck.getPerson(), detail.findElement(By.cssSelector("h4.recipent")).getText());
+        Assert.assertEquals(noteToCheck.getMessage(), detail.findElement(By.cssSelector("p")).getText());
     }
 
     public void checkNoteInList(String title) {
