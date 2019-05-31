@@ -1,12 +1,14 @@
 package opakovanieTesty;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import java.awt.*;
 
 public class XpathTrainingTestOpakovanie {
     WebDriver driver;
@@ -20,7 +22,7 @@ public class XpathTrainingTestOpakovanie {
         driver.get("http://localhost/xpathtrainingcenter.php");
     }
 
-    @After
+    //@After
     public void tearDown() {
         driver.close();
         driver.quit();
@@ -52,4 +54,22 @@ public class XpathTrainingTestOpakovanie {
                 actualMessage
         );
     }
+
+    @Test
+    public void itShouldSelectAllOptions() {
+        String[] selectedOptions = {"Moznost 1", "Moznost 2", "Moznost 3", "Moznost 4", "Moznost 5", "Moznost 6"};
+
+        //najdem element select
+        WebElement optionSelect = driver.findElement(By.xpath("//select[1]"));
+        for (String option : selectedOptions) {
+            //vyberiem moznost
+            new Select(optionSelect).selectByVisibleText(option);
+            //overim hlasku
+            String actualMessage = driver.findElement(By.cssSelector("div.output h2 span")).getText();
+            String expectedMessage = "you have chosen " + option.toLowerCase();
+           // String expectedMessageByFormat = String.format("I choose you %s !", pokemon);
+            Assert.assertEquals(expectedMessage, actualMessage);
+        }
+    }
+
 }
