@@ -73,6 +73,10 @@ public class GosslingatorTestOpakovanie {
                 Assert.assertEquals("ryans", actualDescription);
             }
 
+            //overim pocet obrazkov ryana
+            int numberOfRyanImages = driver.findElements(By.cssSelector("img")).size();
+            Assert.assertEquals(i + 1, numberOfRyanImages);
+
             System.out.println("index i = " + i);
             System.out.println("pocet ryanov = " + actualNumberOfRyans);
         }
@@ -98,6 +102,14 @@ public class GosslingatorTestOpakovanie {
             actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
             clicks++;
         }
+    }
+
+    @Test
+    public void itShouldDisplayNoRyanOnPageOpen() {
+        Assert.assertEquals(
+                0,
+                driver.findElements(By.cssSelector("img")).size()
+        );
     }
 
     @After
