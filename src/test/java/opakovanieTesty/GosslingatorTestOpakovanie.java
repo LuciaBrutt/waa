@@ -22,26 +22,21 @@ public class GosslingatorTestOpakovanie extends TestBase {
 
     @Test
     public void itShouldAddOneRyan() {
-        driver.findElement(By.id("addRyan")).click();
+        addRyan();
         //3.overit pocitanie ryanov
-        actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
-        Assert.assertEquals("1", actualNumberOfRyans);
+        Assert.assertEquals("1", getRyanCounterNumber());
         // vypisem si do console aktualny pocet z pocitadla ryanov
-        System.out.println("Number of ryans: " + driver.findElement(By.cssSelector("div.ryan-counter h2")).getText());
-        Assert.assertEquals("ryan", driver.findElement(By.cssSelector("div.ryan-counter h3")).getText());
+        Assert.assertEquals("ryan", getCounterDescription());
     }
 
     @Test
     public void itShouldTwoRyans() {
         //2.kliknut na tlacidlo pridat
-        WebElement addRyanBtn = driver.findElement(By.id("addRyan"));
-        addRyanBtn.click();
-        addRyanBtn.click();
+        addRyan();
+        addRyan();
         //3.overit pocitanie ryanov
-        actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
-        String actualRyanDescription = driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
-        Assert.assertEquals("2", actualNumberOfRyans);
-        Assert.assertEquals("ryans", actualRyanDescription);
+        Assert.assertEquals("2", getRyanCounterNumber());
+        Assert.assertEquals("ryans", getCounterDescription());
     }
 
     @Test
@@ -53,21 +48,18 @@ public class GosslingatorTestOpakovanie extends TestBase {
     @Test
     public void itShouldDisplayWarningMessage() {
         //toto raz bude for cyklus
-        WebElement addRyanButton = driver.findElement(By.id("addRyan"));
         for (int i = 0; i < 50; i++) {
-            addRyanButton.click();
-            String actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
+            addRyan();
             //porovnam skutocnu hodnotu zo stranky s hodnotou indexu +1
             //index si musim premenit na String aby som ich mohol porovnat
-            Assert.assertEquals(String.valueOf(i + 1), actualNumberOfRyans);
+            Assert.assertEquals(String.valueOf(i + 1), getRyanCounterNumber());
 
             //overit sklonovanie pomocou podmienky
-            String actualDescription = driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
             if (i + 1 == 1) {
-                Assert.assertEquals("ryan", actualDescription);
+                Assert.assertEquals("ryan", getCounterDescription());
             }
             if (i + 1 >= 2) {
-                Assert.assertEquals("ryans", actualDescription);
+                Assert.assertEquals("ryans", getCounterDescription());
             }
 
             //overim pocet obrazkov ryana
@@ -75,7 +67,7 @@ public class GosslingatorTestOpakovanie extends TestBase {
             Assert.assertEquals(i + 1, numberOfRyanImages);
 
             System.out.println("index i = " + i);
-            System.out.println("pocet ryanov = " + actualNumberOfRyans);
+            System.out.println("pocet ryanov = " + getRyanCounterNumber());
         }
 
         Assert.assertEquals(
@@ -89,14 +81,11 @@ public class GosslingatorTestOpakovanie extends TestBase {
 
     @Test
     public void itShouldDisplayWarningMessageUsingWhileCycle() {
-        WebElement addRyanButton = driver.findElement(By.id("addRyan"));
-        String actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
         //while cyklus sa vykona vzdy ak je podmienka "true"
         int clicksLimit = 30;
         int clicks = 0;
-        while (!actualNumberOfRyans.equals("50") && clicks < clicksLimit) {
-            addRyanButton.click();
-            actualNumberOfRyans = driver.findElement(By.id("ryanCounter")).getText();
+        while (!getRyanCounterNumber().equals("50") && clicks < clicksLimit) {
+            addRyan();
             clicks++;
         }
     }
@@ -105,8 +94,24 @@ public class GosslingatorTestOpakovanie extends TestBase {
     public void itShouldDisplayNoRyanOnPageOpen() {
         Assert.assertEquals(
                 0,
-                driver.findElements(By.cssSelector("img")).size()
-        );
+                getNumberOfRyanImages());
+    }
+
+    private void addRyan() {
+        WebElement ryanButton = driver.findElement(By.id("addRyan"));
+        ryanButton.click();
+    }
+
+    private String getRyanCounterNumber() {
+        return driver.findElement(By.id("ryanCounter")).getText();
+    }
+
+    private String getCounterDescription() {
+        return driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
+    }
+
+    private int getNumberOfRyanImages() {
+        return driver.findElements(By.cssSelector("img")).size();
     }
 
 }
