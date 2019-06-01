@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,18 +10,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class GosslingatorTestOpakovanie {
+public class GosslingatorTestOpakovanie extends TestBase {
 
-    String actualNumberOfRyans;
-    WebDriver driver;
+    private String actualNumberOfRyans;
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
+    public void openPage() {
         //1.otvorit stranku
-        driver.get("http://localhost/gosslingator.php");
+        driver.get(BASE_URL + "/gosslingator.php");
     }
 
     @Test
