@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.awt.*;
+import java.util.List;
 
 public class XpathTrainingTestOpakovanie {
     WebDriver driver;
@@ -73,3 +74,4 @@ public class XpathTrainingTestOpakovanie {
     }
 
 }
+
