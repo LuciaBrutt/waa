@@ -21,16 +21,24 @@ public class PokemonTestOpakovanie extends TestBase {
     public void itShouldSelectPokemons() {
         String[] selectedPokemons = {"Pikachu", "Bulbasaur", "Charmander", "Diglett", "Geodude"};
 
-        //najdem element select
-        WebElement pokemonSelect = driver.findElement(By.cssSelector("select"));
         for (String pokemon : selectedPokemons) {
             //vyberiem pokemona
-            new Select(pokemonSelect).selectByVisibleText(pokemon);
-            //overim hlasku
-            String actualMessage = driver.findElement(By.cssSelector("div.pokemon h3")).getText();
-            String expectedMessage = "I choose you " + pokemon + " !";
-            String expectedMessageByFormat = String.format("I choose you %s !", pokemon);
-            Assert.assertEquals(expectedMessageByFormat, actualMessage);
+            selectPokemon(pokemon);
+            Assert.assertEquals(getExpectedMessage(pokemon), getActualMessage());
         }
     }
+
+    private void selectPokemon(String pokemonToSelect) {
+        WebElement pokemonSelect = driver.findElement(By.cssSelector("select"));
+        new Select(pokemonSelect).selectByVisibleText(pokemonToSelect);
+    }
+
+    private String getActualMessage() {
+        return driver.findElement(By.cssSelector("div.pokemon h3")).getText();
+    }
+
+    private String getExpectedMessage(String pokemonName) {
+        return String.format("I choose you %s !", pokemonName);
+    }
+
 }
