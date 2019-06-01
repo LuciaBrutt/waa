@@ -109,11 +109,4 @@ public class GosslingatorTestOpakovanie extends TestBase {
         );
     }
 
-    @After
-    public void tearDown() {
-        driver.close();
-        //5.ukoncit session
-        driver.quit();
-        //CTRL+D
-    }
 }
