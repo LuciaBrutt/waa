@@ -60,34 +60,50 @@ public class NoteTestOpakovanie extends TestBase {
     public void itShouldAddNote() throws InterruptedException {
         //vytvorim si casovu peciatku pre unikatnost title
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Fairy fairy = Fairy.create();
+        Person fakePerson = fairy.person();
+        //ulozim si hodnoty do premennych
         String title = "Title " + timestamp.getTime();
-        String author = "Ignac";
+        String author = fakePerson.getFirstName() + " " + fakePerson.getLastName();
         String message = "toto je velmi dlhy a zmysluplny odkaz";
 
-        Integer numberOfNotes = Integer.valueOf(driver.findElement(By.cssSelector("h3.sin-header span")).getText());
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("author")).sendKeys(author);
-        driver.findElement(By.name("message")).sendKeys(message);
-        driver.findElement(By.cssSelector("button.btn-block")).click();
+        enterNoteData(title, author, message);
+        submitNewNote();
+        checkNoteInList(title);
+        getLastNoteFromList().click();
+        //overim detail zaznamu
+        Thread.sleep(1000);
+        checkNoteDetail(title, author, message);
+    }
 
-        WebElement listItem = driver.findElement(By.cssSelector("ul.list-of-sins > li:last-child"));
+    private void enterNoteData(String title, String person, String message) {
+        driver.findElement(By.name("title")).sendKeys(title);
+        driver.findElement(By.name("author")).sendKeys(person);
+        driver.findElement(By.name("message")).sendKeys(message);
+    }
+
+    private void submitNewNote() {
+        driver.findElement(By.cssSelector("button.btn-block")).click();
+    }
+
+    private WebElement getLastNoteFromList() {
+        return driver.findElement(By.cssSelector("ul.list-of-sins > li:last-child"));
+    }
+
+    private void checkNoteDetail(String title, String author, String message) {
+        WebElement detail = driver.findElement(By.cssSelector("div.content"));
+        Assert.assertEquals(title, detail.findElement(By.cssSelector("h4.title")).getText());
+        Assert.assertEquals(author, detail.findElement(By.cssSelector("h4.recipent")).getText());
+        Assert.assertEquals(message, detail.findElement(By.cssSelector("p")).getText());
+    }
+
+    private void checkNoteInList(String title) {
+        WebElement listItem = getLastNoteFromList();
         //overim ze sa pridal novy zaznam do zoznamu
         Assert.assertTrue(listItem.getText().contains(title));
         //overenie linku
         Assert.assertTrue(listItem.findElement(By.cssSelector("div.description a")).isDisplayed());
         Assert.assertEquals("detail", listItem.findElement(By.cssSelector("div.description a")).getText());
-
-        Assert.assertEquals(
-                Integer.valueOf(numberOfNotes + 1),
-                Integer.valueOf(driver.findElement(By.cssSelector("h3.sin-header span")).getText())
-        );
-        listItem.click();
-        //overim detail zaznamu
-        Thread.sleep(1000);
-        WebElement detail = driver.findElement(By.cssSelector("div.content"));
-        Assert.assertEquals(title, detail.findElement(By.cssSelector("h4.title")).getText());
-        Assert.assertEquals(author, detail.findElement(By.cssSelector("h4.recipent")).getText());
-        Assert.assertEquals(message, detail.findElement(By.cssSelector("p")).getText());
     }
 
 }
