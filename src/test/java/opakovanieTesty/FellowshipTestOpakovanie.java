@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,16 +14,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class FellowshipTestOpakovanie {
-    WebDriver driver;
+public class FellowshipTestOpakovanie extends TestBase {
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //1.otvorit stranku
-        driver.get("http://localhost/fellowship.php");
+    public void openPage() {
+        driver.get(BASE_URL + "/fellowship.php");
     }
 
     @Test

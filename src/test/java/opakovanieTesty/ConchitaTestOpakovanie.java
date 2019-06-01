@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,17 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class ConchitaTestOpakovanie {
-
-    WebDriver driver;
+public class ConchitaTestOpakovanie extends TestBase {
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //1.otvorit stranku
-        driver.get("http://localhost/zenaalebomuz.php");
+    public void openPage() {
+        driver.get(BASE_URL + "/zenaalebomuz.php");
     }
 
     @Test

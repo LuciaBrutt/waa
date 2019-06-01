@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,17 +12,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
-public class RandomTableTestOpakovanie {
-
-    WebDriver driver;
+public class RandomTableTestOpakovanie extends TestBase {
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //1.otvorit stranku
-        driver.get("http://localhost/tabulka.php");
+    public void openPage() {
+        driver.get(BASE_URL + "/tabulka.php");
     }
 
     @Test
@@ -53,11 +48,4 @@ public class RandomTableTestOpakovanie {
         }
     }
 
-    @After
-    public void tearDown(){
-        //zatvorit prehliadac
-        driver.close();
-        //ukoncit session
-        driver.quit();
-    }
 }

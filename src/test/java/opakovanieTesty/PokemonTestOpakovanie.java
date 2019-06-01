@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,17 +10,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class PokemonTestOpakovanie {
-
-    WebDriver driver;
+public class PokemonTestOpakovanie extends TestBase {
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //1.otvorit stranku
-        driver.get("http://localhost/vybersi.php");
+    public void openPage() {
+        driver.get(BASE_URL + "/vybersi.php");
     }
 
     @Test

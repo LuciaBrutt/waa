@@ -1,5 +1,6 @@
 package opakovanieTesty;
 
+import base.TestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,23 +9,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class RegistrationTestOpakovanie {
-
-    WebDriver driver;
+public class RegistrationTestOpakovanie extends TestBase {
 
     @Before
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver74.exe");
-        //0.spustit prehliadac
-        driver = new ChromeDriver();
-        //1.otvorit stranku
-        driver.get("http://localhost/registracia.php");
-    }
-
-    //@After
-    public void tearDown() {
-        driver.close();
-        driver.quit();
+    public void openPage() {
+        driver.get(BASE_URL + "/registracia.php ");
     }
 
     @Test
