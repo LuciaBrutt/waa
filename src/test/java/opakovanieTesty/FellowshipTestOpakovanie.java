@@ -68,4 +68,18 @@ public class FellowshipTestOpakovanie {
 
         Assert.assertEquals("Complete", driver.findElement(By.cssSelector("div.points-left h3")).getText());
     }
+
+    @Test
+    public void itShouldDisplayPointsForEachFellow() {
+        //najdem si zoznam vsetkych spolocnikov z ringu a ulozim ich do listu webelementov
+        List<WebElement> displayedFellows = driver.findElements(By.cssSelector("ul.list-of-fellows li"));
+        for (WebElement displayedFellow : displayedFellows) {
+
+            // /pre kazdeho najdem element v ktorom je ulozeny pocet bodov a zistim jeho text
+            String actualPoints = displayedFellow.findElement(By.cssSelector("div.fellow-points h2")).getText();
+
+            //overim ze hodnota actual points nie je prazdna
+            Assert.assertFalse(actualPoints.isEmpty());
+        }
+    }
 }
