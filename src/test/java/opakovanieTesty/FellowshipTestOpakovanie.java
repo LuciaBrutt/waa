@@ -53,4 +53,19 @@ public class FellowshipTestOpakovanie {
         Assert.assertTrue(fellowNames.contains("Aragorn"));
         Assert.assertTrue(fellowNames.contains("Frodo"));
     }
+
+    @Test
+    public void itShouldDisplayMessageComplete() {
+        List<String> fellowsToSelect = new ArrayList<String>();
+        fellowsToSelect.add("Gandalf");
+        fellowsToSelect.add("Aragorn");
+        fellowsToSelect.add("Legolas");
+        fellowsToSelect.add("Frodo");
+
+        for (String fellowToSelect : fellowsToSelect) {
+            driver.findElement(By.xpath("//h1[contains(text(),'" + fellowToSelect + "')]")).click();
+        }
+
+        Assert.assertEquals("Complete", driver.findElement(By.cssSelector("div.points-left h3")).getText());
+    }
 }
