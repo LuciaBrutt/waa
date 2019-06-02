@@ -8,10 +8,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 
 public class GosslingatorTest extends TestBase {
     private GosslingatorPage gossPage;
-
 
 
     private String actualNumberOfRyans;
@@ -26,8 +27,6 @@ public class GosslingatorTest extends TestBase {
     }
 
 
-
-
     @Test
     public void itShouldAddOneRyan() {
 
@@ -40,7 +39,7 @@ public class GosslingatorTest extends TestBase {
         Assert.assertEquals("1", gossPage.getRyanCounterNumber());
 
         // vypisem si do logu aktualny pocet z pocitadla ryanov
-        Assert.assertEquals("ryan", gossPage.getCounterDescription ());
+        Assert.assertEquals("ryan", gossPage.getCounterDescription());
 
     }
 
@@ -95,7 +94,7 @@ public class GosslingatorTest extends TestBase {
 
             // overim pocet obrazkov ryana
 
-            Assert.assertEquals(i+1, gossPage.getNumberOfRyanImages());
+            Assert.assertEquals(i + 1, gossPage.getNumberOfRyanImages());
 
             System.out.println("index i = " + i);
             System.out.println("pocet ryanov = " + gossPage.getRyanCounterNumber());
@@ -128,10 +127,10 @@ public class GosslingatorTest extends TestBase {
     }
 
     @Test
-        public void itShouldDisplayNoRyanOnPageOpen(){
-        Assert.assertEquals( 0,
-                gossPage.getNumberOfRyanImages ()
+    public void itShouldDisplayNoRyanOnPageOpen() {
+        Assert.assertEquals(0,
+                gossPage.getNumberOfRyanImages()
         );
-}
+    }
 
 }

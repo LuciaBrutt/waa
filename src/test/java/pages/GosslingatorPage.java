@@ -22,6 +22,7 @@ public class GosslingatorPage {
     }
 
     public void addRyan (){
+
         addRyanButton.click();
     }
 
