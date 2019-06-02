@@ -1,6 +1,7 @@
 package opakovanieTesty;
 
 import base.TestBase;
+import opakovaniePages.GosslingatorPageOpakovanie;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,21 +23,23 @@ public class GosslingatorTestOpakovanie extends TestBase {
 
     @Test
     public void itShouldAddOneRyan() {
-        addRyan();
+        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
+        gossPage.addRyan();
         //3.overit pocitanie ryanov
-        Assert.assertEquals("1", getRyanCounterNumber());
+        Assert.assertEquals("1", gossPage.getRyanCounterNumber());
         // vypisem si do console aktualny pocet z pocitadla ryanov
-        Assert.assertEquals("ryan", getCounterDescription());
+        Assert.assertEquals("ryan", gossPage.getCounterDescription());
     }
 
     @Test
     public void itShouldTwoRyans() {
         //2.kliknut na tlacidlo pridat
-        addRyan();
-        addRyan();
+        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
+        gossPage.addRyan();
+        gossPage.addRyan();
         //3.overit pocitanie ryanov
-        Assert.assertEquals("2", getRyanCounterNumber());
-        Assert.assertEquals("ryans", getCounterDescription());
+        Assert.assertEquals("2", gossPage.getRyanCounterNumber());
+        Assert.assertEquals("ryans", gossPage.getCounterDescription());
     }
 
     @Test
@@ -47,27 +50,27 @@ public class GosslingatorTestOpakovanie extends TestBase {
 
     @Test
     public void itShouldDisplayWarningMessage() {
+        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
         //toto raz bude for cyklus
         for (int i = 0; i < 50; i++) {
-            addRyan();
+            gossPage.addRyan();
             //porovnam skutocnu hodnotu zo stranky s hodnotou indexu +1
             //index si musim premenit na String aby som ich mohol porovnat
-            Assert.assertEquals(String.valueOf(i + 1), getRyanCounterNumber());
+            Assert.assertEquals(String.valueOf(i + 1), gossPage.getRyanCounterNumber());
 
             //overit sklonovanie pomocou podmienky
             if (i + 1 == 1) {
-                Assert.assertEquals("ryan", getCounterDescription());
+                Assert.assertEquals("ryan", gossPage.getCounterDescription());
             }
             if (i + 1 >= 2) {
-                Assert.assertEquals("ryans", getCounterDescription());
+                Assert.assertEquals("ryans", gossPage.getCounterDescription());
             }
 
             //overim pocet obrazkov ryana
-            int numberOfRyanImages = driver.findElements(By.cssSelector("img")).size();
-            Assert.assertEquals(i + 1, numberOfRyanImages);
+            Assert.assertEquals(i + 1, gossPage.getNumberOfRyanImages());
 
             System.out.println("index i = " + i);
-            System.out.println("pocet ryanov = " + getRyanCounterNumber());
+            System.out.println("pocet ryanov = " + gossPage.getRyanCounterNumber());
         }
 
         Assert.assertEquals(
@@ -82,36 +85,21 @@ public class GosslingatorTestOpakovanie extends TestBase {
     @Test
     public void itShouldDisplayWarningMessageUsingWhileCycle() {
         //while cyklus sa vykona vzdy ak je podmienka "true"
+        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
         int clicksLimit = 30;
         int clicks = 0;
-        while (!getRyanCounterNumber().equals("50") && clicks < clicksLimit) {
-            addRyan();
+        while (!gossPage.getRyanCounterNumber().equals("50") && clicks < clicksLimit) {
+            gossPage.addRyan();
             clicks++;
         }
     }
 
     @Test
     public void itShouldDisplayNoRyanOnPageOpen() {
+        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
         Assert.assertEquals(
                 0,
-                getNumberOfRyanImages());
-    }
-
-    private void addRyan() {
-        WebElement ryanButton = driver.findElement(By.id("addRyan"));
-        ryanButton.click();
-    }
-
-    private String getRyanCounterNumber() {
-        return driver.findElement(By.id("ryanCounter")).getText();
-    }
-
-    private String getCounterDescription() {
-        return driver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
-    }
-
-    private int getNumberOfRyanImages() {
-        return driver.findElements(By.cssSelector("img")).size();
+                gossPage.getNumberOfRyanImages());
     }
 
 }
