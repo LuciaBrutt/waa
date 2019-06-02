@@ -3,18 +3,26 @@ package opakovaniePages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class GosslingatorPageOpakovanie {
 
-    WebDriver pageDriver;
+    @FindBy(id = "addRyan")
+    private WebElement addRyanButton;
+
+    @FindBy(css = "div.ryan-counter h3")
+    private WebElement ryanDescription;
+
+    private WebDriver pageDriver;
 
     public GosslingatorPageOpakovanie(WebDriver driver) {
         this.pageDriver = driver;
+        PageFactory.initElements(pageDriver, this);
     }
 
     public void addRyan() {
-        WebElement ryanButton = pageDriver.findElement(By.id("addRyan"));
-        ryanButton.click();
+        addRyanButton.click();
     }
 
     public String getRyanCounterNumber() {
@@ -22,7 +30,7 @@ public class GosslingatorPageOpakovanie {
     }
 
     public String getCounterDescription() {
-        return pageDriver.findElement(By.cssSelector("div.ryan-counter h3")).getText();
+        return ryanDescription.getText();
     }
 
     public int getNumberOfRyanImages() {
