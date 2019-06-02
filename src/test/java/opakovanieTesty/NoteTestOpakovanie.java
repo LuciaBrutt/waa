@@ -3,6 +3,7 @@ package opakovanieTesty;
 import base.TestBase;
 import io.codearte.jfairy.Fairy;
 import io.codearte.jfairy.producer.person.Person;
+import opakovaniePages.NotePageOpakovanie;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +17,12 @@ import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.name;
 
 public class NoteTestOpakovanie extends TestBase {
+    private NotePageOpakovanie notePage;
 
     @Before
     public void openPage() {
         driver.get(BASE_URL + "/odkazovac.php");
+        notePage = new NotePageOpakovanie(driver);
     }
 
     @Test
@@ -66,43 +69,13 @@ public class NoteTestOpakovanie extends TestBase {
         String author = fakePerson.getFirstName() + " " + fakePerson.getLastName();
         String message = "toto je velmi dlhy a zmysluplny odkaz";
 
-        enterNoteData(title, author, message);
-        submitNewNote();
-        checkNoteInList(title);
-        getLastNoteFromList().click();
+        notePage.enterNoteData(title, author, message);
+        notePage.submitNewNote();
+        notePage.checkNoteInList(title);
+        notePage.getLastNoteFromList().click();
         //overim detail zaznamu
         Thread.sleep(1000);
-        checkNoteDetail(title, author, message);
-    }
-
-    private void enterNoteData(String title, String person, String message) {
-        driver.findElement(By.name("title")).sendKeys(title);
-        driver.findElement(By.name("author")).sendKeys(person);
-        driver.findElement(By.name("message")).sendKeys(message);
-    }
-
-    private void submitNewNote() {
-        driver.findElement(By.cssSelector("button.btn-block")).click();
-    }
-
-    private WebElement getLastNoteFromList() {
-        return driver.findElement(By.cssSelector("ul.list-of-sins > li:last-child"));
-    }
-
-    private void checkNoteDetail(String title, String author, String message) {
-        WebElement detail = driver.findElement(By.cssSelector("div.content"));
-        Assert.assertEquals(title, detail.findElement(By.cssSelector("h4.title")).getText());
-        Assert.assertEquals(author, detail.findElement(By.cssSelector("h4.recipent")).getText());
-        Assert.assertEquals(message, detail.findElement(By.cssSelector("p")).getText());
-    }
-
-    private void checkNoteInList(String title) {
-        WebElement listItem = getLastNoteFromList();
-        //overim ze sa pridal novy zaznam do zoznamu
-        Assert.assertTrue(listItem.getText().contains(title));
-        //overenie linku
-        Assert.assertTrue(listItem.findElement(By.cssSelector("div.description a")).isDisplayed());
-        Assert.assertEquals("detail", listItem.findElement(By.cssSelector("div.description a")).getText());
+        notePage.checkNoteDetail(title, author, message);
     }
 
     private String generateUniqueTitle() {
