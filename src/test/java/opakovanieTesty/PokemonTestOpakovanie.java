@@ -1,6 +1,7 @@
 package opakovanieTesty;
 
 import base.TestBase;
+import opakovaniePages.PokemonPageOpakovanie;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +12,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class PokemonTestOpakovanie extends TestBase {
+    private PokemonPageOpakovanie pokemonPage;
 
     @Before
     public void openPage() {
         driver.get(BASE_URL + "/vybersi.php");
+        pokemonPage = new PokemonPageOpakovanie(driver);
     }
 
     @Test
@@ -23,18 +26,9 @@ public class PokemonTestOpakovanie extends TestBase {
 
         for (String pokemon : selectedPokemons) {
             //vyberiem pokemona
-            selectPokemon(pokemon);
-            Assert.assertEquals(getExpectedMessage(pokemon), getActualMessage());
+            pokemonPage.selectPokemon(pokemon);
+            Assert.assertEquals(getExpectedMessage(pokemon), pokemonPage.getActualMessage());
         }
-    }
-
-    private void selectPokemon(String pokemonToSelect) {
-        WebElement pokemonSelect = driver.findElement(By.cssSelector("select"));
-        new Select(pokemonSelect).selectByVisibleText(pokemonToSelect);
-    }
-
-    private String getActualMessage() {
-        return driver.findElement(By.cssSelector("div.pokemon h3")).getText();
     }
 
     private String getExpectedMessage(String pokemonName) {
