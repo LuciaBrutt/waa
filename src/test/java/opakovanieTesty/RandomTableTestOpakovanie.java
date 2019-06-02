@@ -31,21 +31,23 @@ public class RandomTableTestOpakovanie extends TestBase {
 
     @Test
     public void itShouldContainDataForEachRow() {
-        List<WebElement> tableRows = driver.findElements(By.cssSelector("table tbody tr"));
-        for (WebElement tableRow : tableRows) {
+        for (WebElement tableRow : getRows()) {
             Assert.assertFalse(tableRow.getText().isEmpty());
         }
     }
 
     @Test
     public void itShouldContainNameForEachRow() {
-        List<WebElement> tableRows = driver.findElements(By.cssSelector("table tbody tr"));
+        List<WebElement> tableRows = getRows();
         for (WebElement tableRow : tableRows) {
             tableRow.findElement(By.cssSelector("td:nth-child(2)"));
             WebElement rowName = tableRow.findElement(By.xpath("./td[2]"));
             Assert.assertFalse(rowName.getText().isEmpty());
-
         }
+    }
+
+    private List<WebElement> getRows() {
+        return driver.findElements(By.cssSelector("table tbody tr"));
     }
 
 }
