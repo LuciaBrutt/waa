@@ -3,14 +3,36 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class CalculatorPage {
-    WebDriver pageDriver;
+
+    @FindBy(id = "firstInput")
+    private WebElement firstInput;
+
+    @FindBy(id = "secondInput")
+    private WebElement secondInput;
+
+    @FindBy(id = "count")
+    private WebElement countButton;
+
+    @FindBy(id = "reset")
+    private WebElement resetButton;
+
+    @FindBy(id = "deduct")
+    private WebElement deductButton;
+
+    @FindBy(id = "result")
+    private WebElement result;
+
+    private WebDriver pageDriver;
 
     public CalculatorPage(WebDriver pageDriver) {
         this.pageDriver = pageDriver;
+        PageFactory.initElements(pageDriver, this);
     }
 
     public WebElement getLatestCalculation() {
@@ -22,26 +44,34 @@ public class CalculatorPage {
     }
 
     public void sumNumbers() {
-        pageDriver.findElement(By.id("count")).click();
+        countButton.click();
     }
 
     public void enterFirstInput(String textToInput) {
-        pageDriver.findElement(By.id("firstInput")).sendKeys(textToInput);
+        firstInput.sendKeys(textToInput);
     }
 
     public void enterSecondInput(String textToInput) {
-        pageDriver.findElement(By.id("secondInput")).sendKeys(textToInput);
+        secondInput.sendKeys(textToInput);
     }
 
     public String getResult() {
-        return pageDriver.findElement(By.id("result")).getText();
+        return result.getText();
     }
 
     public void deductNumbers() {
-        pageDriver.findElement(By.id("deduct")).click();
+        deductButton.click();
     }
 
     public void resetCalculator() {
-        pageDriver.findElement(By.id("reset")).click();
+        resetButton.click();
+    }
+
+    public WebElement getFirstInput() {
+        return firstInput;
+    }
+
+    public WebElement getSecondInput() {
+        return secondInput;
     }
 }

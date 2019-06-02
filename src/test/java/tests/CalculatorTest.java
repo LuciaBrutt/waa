@@ -44,8 +44,8 @@ public class CalculatorTest extends TestBase {
         calculatorPage.enterSecondInput("4");
         calculatorPage.deductNumbers();
         calculatorPage.resetCalculator();
-        Assert.assertTrue(driver.findElement(By.id("firstInput")).getAttribute("value").isEmpty());
-        Assert.assertTrue(driver.findElement(By.id("secondInput")).getAttribute("value").isEmpty());
+        Assert.assertTrue(calculatorPage.getFirstInput().getAttribute("value").isEmpty());
+        Assert.assertTrue(calculatorPage.getSecondInput().getAttribute("value").isEmpty());
     }
 
     @Test
@@ -56,4 +56,11 @@ public class CalculatorTest extends TestBase {
         Assert.assertEquals("10+8 = 18", calculatorPage.getLatestCalculation().getText());
         Assert.assertEquals(1, calculatorPage.getLatestCalculations().size());
     }
+
+    //@Test
+    //public void chceckPlaceHolder(){
+        //System.out.println(driver.findElement(By.id("firstInput")).getAttribute("placeholder");
+        //System.out.println(driver.findElement(By.id("firstInput")).getAttribute("class");
+        //System.out.println(driver.findElement(By.id("count")).getCssValue("background-color");
+    //}
 }
