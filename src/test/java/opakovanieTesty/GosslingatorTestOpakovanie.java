@@ -11,19 +11,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+
 public class GosslingatorTestOpakovanie extends TestBase {
 
+    private GosslingatorPageOpakovanie gossPage;
     private String actualNumberOfRyans;
 
     @Before
     public void openPage() {
         //1.otvorit stranku
         driver.get(BASE_URL + "/gosslingator.php");
+        gossPage = new GosslingatorPageOpakovanie(driver);
     }
 
     @Test
     public void itShouldAddOneRyan() {
-        GosslingatorPageOpakovanie gossPage = new GosslingatorPageOpakovanie(driver);
         gossPage.addRyan();
         //3.overit pocitanie ryanov
         Assert.assertEquals("1", gossPage.getRyanCounterNumber());
