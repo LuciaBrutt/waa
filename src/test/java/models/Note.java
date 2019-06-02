@@ -11,15 +11,32 @@ public class Note {
         this.message = message;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getPerson(){
+    public String getPerson() {
         return person;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
+
+    //  public void setTitle(String title) {
+    // this.title = title;
+    //}
+
+    //public void setPerson(String person) {
+    // this.person = person;
+    //}
+
+    //public void setMessage(String message) {
+    //this.message = message;
+//}
+
+//public static void main (String[] args) {
+    // Note note = new Note ("titulok 1 ", null, "sprava 1");
+    //System.out.println(note.getTitle());
+    //note.setTitle("titulok 2");
 }

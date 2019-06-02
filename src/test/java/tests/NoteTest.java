@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.NotePage;
 
 
@@ -29,8 +31,8 @@ public class NoteTest extends TestBase {
     public void itShouldAddNote() throws InterruptedException {
         //vytvorim si casovu peciatku pre unikatnost title
 
-        Fairy fairy = Fairy.create();
-        Person fakePerson = fairy.person();
+        //Fairy fairy = Fairy.create();
+        //Person fakePerson = fairy.person();
 
         //ulozim si hodnoty do premennych
         //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -48,9 +50,7 @@ public class NoteTest extends TestBase {
         notePage.enterNoteData(noteToAdd);
         notePage.submitNewNote();
         notePage.checkNoteInList(noteToAdd.getTitle());
-        notePage.getLastNoteFromList().click();
-        //overim detail zaznamu
-        Thread.sleep(1000);
+        notePage.openLastNote();
         notePage.checkNoteDetail(noteToAdd);
     }
 

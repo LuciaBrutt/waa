@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NotePage {
 
@@ -58,5 +60,13 @@ public class NotePage {
         //overenie linku
         Assert.assertTrue(listItem.findElement(By.cssSelector("div.description a")).isDisplayed());
         Assert.assertEquals("detail", listItem.findElement(By.cssSelector("div.description a")).getText());
+    }
+
+    public void openLastNote() {
+        getLastNoteFromList().click();
+        //overim detail zaznamu
+        //Thread.sleep(1000);
+        new WebDriverWait(pageDriver, 10)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.content")));
     }
 }
