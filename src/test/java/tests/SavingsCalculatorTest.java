@@ -25,11 +25,9 @@ public class SavingsCalculatorTest extends TestBase{
         WebElement fondSelect = driver.findElement(By.id("fundSelect"));
         new Select(fondSelect).selectByVisibleText(selectedFond);
 
-        String email = "test@mail.sk";
-
-        driver.findElement(By.id("oneTimeInvestmentInput")).sendKeys("1000");
-        driver.findElement(By.id("yearsInput")).sendKeys("5");
-        driver.findElement(By.id("emailInput")).sendKeys(email);
+        enterInvestment("1000");
+        enterYears("5");
+        enterEmail("test@mail.sk");
 
         Assert.assertTrue(driver.findElement(By.cssSelector("button.btn-success")).isEnabled());
     }
@@ -41,11 +39,10 @@ public class SavingsCalculatorTest extends TestBase{
         WebElement fondSelect = driver.findElement(By.id("fundSelect"));
         new Select(fondSelect).selectByVisibleText(selectedFond);
 
-        String email = "test@mail.sk";
+        enterInvestment("1000");
+        enterYears("5");
+        enterEmail("test@mail.sk");
 
-        driver.findElement(By.id("oneTimeInvestmentInput")).sendKeys("1000");
-        driver.findElement(By.id("yearsInput")).sendKeys("5");
-        driver.findElement(By.id("emailInput")).sendKeys(email);
 
         WebElement container = driver.findElement(By.cssSelector("div.result"));
         System.out.println(container.findElement(By.xpath("./div[1]/p")).getText());
@@ -62,11 +59,10 @@ public class SavingsCalculatorTest extends TestBase{
         WebElement fondSelect = driver.findElement(By.id("fundSelect"));
         new Select(fondSelect).selectByVisibleText(selectedFond);
 
-        String email = "test@mail.sk";
+        enterInvestment("1000");
+        enterYears("5");
+        enterEmail("test@mail.sk");
 
-        driver.findElement(By.id("oneTimeInvestmentInput")).sendKeys("1000");
-        driver.findElement(By.id("yearsInput")).sendKeys("5");
-        driver.findElement(By.id("emailInput")).sendKeys(email);
 
         WebElement container = driver.findElement(By.cssSelector("div.result"));
         System.out.println(container.findElement(By.xpath("./div[3]/p")).getText());
@@ -81,16 +77,30 @@ public class SavingsCalculatorTest extends TestBase{
         WebElement fondSelect = driver.findElement(By.id("fundSelect"));
         new Select(fondSelect).selectByVisibleText(selectedFond);
 
-        String email = "test@mail.sk";
+        enterInvestment("1000");
+        enterYears("5");
+        enterEmail("test@mail.sk");
 
-        driver.findElement(By.id("oneTimeInvestmentInput")).sendKeys("1000");
-        driver.findElement(By.id("yearsInput")).sendKeys("5");
-        driver.findElement(By.id("emailInput")).sendKeys(email);
-
-        driver.findElement(By.cssSelector("button.btn-success")).click();
+        buttonClick();
 
         WebElement lastNoteAdded = driver.findElement(By.xpath("//div[contains(@class,'saving-detail')]"));
         assertTrue(lastNoteAdded.getText().contains(selectedFond));
+    }
+
+    private void enterInvestment(String textToInput) {
+        driver.findElement(By.id("oneTimeInvestmentInput")).sendKeys(textToInput);
+    }
+
+    private void enterEmail(String textToInput) {
+        driver.findElement(By.id("emailInput")).sendKeys(textToInput);
+    }
+
+    private void enterYears(String textToInput) {
+        driver.findElement(By.id("yearsInput")).sendKeys(textToInput);
+    }
+
+    private void buttonClick() {
+        driver.findElement(By.cssSelector("button.btn-success")).click();
     }
 
 }
